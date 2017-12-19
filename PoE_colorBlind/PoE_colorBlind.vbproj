@@ -1,0 +1,309 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6EBD5DBF-6A80-4233-B446-4EFD86F30678}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>PoE_colorBlind.My.MyApplication</StartupObject>
+    <RootNamespace>PoE_colorBlind</RootNamespace>
+    <AssemblyName>PoE_colorBlind</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>WindowsForms</MyType>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>
+    </DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>
+    </DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\AppIcon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Gma.System.MouseKeyHook, Version=5.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MouseKeyHook.5.4.0\lib\net40\Gma.System.MouseKeyHook.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="System.Threading.Tasks" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="FrmMain.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmMain.Designer.vb">
+      <DependentUpon>FrmMain.vb</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Helpers\Utils.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Settings\UserInterface\FrmSettings.Designer.vb">
+      <DependentUpon>FrmSettings.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Settings\UserInterface\FrmSettings.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Settings\MouseCoords.vb" />
+    <Compile Include="Settings\Models\Settings.vb" />
+    <Compile Include="Settings\Models\SocketsLayouts.vb" />
+    <Compile Include="Helpers\XMLSerialization.vb" />
+    <Compile Include="Settings\UserInterface\UC_S1.Designer.vb">
+      <DependentUpon>UC_S1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Settings\UserInterface\UC_S1.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Settings\UserInterface\UC_S2H.Designer.vb">
+      <DependentUpon>UC_S2H.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Settings\UserInterface\UC_S2H.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Settings\UserInterface\UC_S2V.Designer.vb">
+      <DependentUpon>UC_S2V.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Settings\UserInterface\UC_S2V.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Settings\UserInterface\UC_S3L.Designer.vb">
+      <DependentUpon>UC_S3L.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Settings\UserInterface\UC_S3L.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Settings\UserInterface\UC_S3V.Designer.vb">
+      <DependentUpon>UC_S3V.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Settings\UserInterface\UC_S3V.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Settings\UserInterface\UC_S4.Designer.vb">
+      <DependentUpon>UC_S4.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Settings\UserInterface\UC_S4.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Settings\UserInterface\UC_S5.Designer.vb">
+      <DependentUpon>UC_S5.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Settings\UserInterface\UC_S5.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Settings\UserInterface\UC_S6.Designer.vb">
+      <DependentUpon>UC_S6.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Settings\UserInterface\UC_S6.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="FrmMain.resx">
+      <DependentUpon>FrmMain.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Settings\UserInterface\FrmSettings.resx">
+      <DependentUpon>FrmSettings.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Settings\UserInterface\UC_S1.resx">
+      <DependentUpon>UC_S1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Settings\UserInterface\UC_S2H.resx">
+      <DependentUpon>UC_S2H.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Settings\UserInterface\UC_S2V.resx">
+      <DependentUpon>UC_S2V.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Settings\UserInterface\UC_S3L.resx">
+      <DependentUpon>UC_S3L.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Settings\UserInterface\UC_S3V.resx">
+      <DependentUpon>UC_S3V.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Settings\UserInterface\UC_S4.resx">
+      <DependentUpon>UC_S4.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Settings\UserInterface\UC_S5.resx">
+      <DependentUpon>UC_S5.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Settings\UserInterface\UC_S6.resx">
+      <DependentUpon>UC_S6.vb</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.manifest" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\YatoOverlay\YatoOverlay.csproj">
+      <Project>{2c0e08a5-8c78-41a2-8dc5-16b161914947}</Project>
+      <Name>YatoOverlay</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Checked.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OptionsDark.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OptionsLight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UnChecked.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\S1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\S2H.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\S2V.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\S3L.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\S3V.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\S4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\S5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\S6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CloseDark.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CloseLight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SaveDark.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SaveLight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MousePointer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\backgroundSettings.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ClosingDark.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ClosingLight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AppIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\backgroundMainQoL.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\achi36.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\achi40.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
