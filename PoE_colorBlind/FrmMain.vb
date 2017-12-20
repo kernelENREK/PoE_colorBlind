@@ -93,6 +93,9 @@ Public Class FrmMain
         Me.Text = "Path of Exile :: QoL colorblind tool"
 
         Try
+            ' Setup hook for CTRL + A and mouse
+            HookSubscribe()
+
             ' Settings initialization -------------------------------------------------------------
             If (IO.File.Exists(SETTINGS_FILE)) Then
                 ' Gets the settings from the settings.xml file (stored on the same path as the assembly)
@@ -111,6 +114,7 @@ Public Class FrmMain
                         Helpers.XMLserialization.Serialize(SETTINGS_FILE, f._newSettings)
                         _mySettings = Helpers.Utils.GeorgeClooneyObject(f._newSettings)
                     Catch ex As Exception
+                        HookUnsubscribe()
                         MessageBox.Show(ex.Message, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error)
                         End
                     End Try
@@ -128,9 +132,6 @@ Public Class FrmMain
                 manager = New OverlayManager(poeProcess.MainWindowHandle, rendererOptions)
                 overlay = manager.Window
                 d2d = manager.Graphics
-
-                ' Setup hook for CTRL + A and mouse
-                HookSubscribe()
             Else
                 Dim bShowWarning As Boolean = True
                 If (Not _mySettings.PoEMustBeRunning) Then
@@ -144,9 +145,6 @@ Public Class FrmMain
                         manager = New OverlayManager(poeProcess.MainWindowHandle, rendererOptions)
                         overlay = manager.Window
                         d2d = manager.Graphics
-
-                        ' Setup hook for CTRL + A and mouse
-                        HookSubscribe()
 
                         bShowWarning = False
                     End If
@@ -166,6 +164,7 @@ Public Class FrmMain
                             MessageBox.Show(ex.Message, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error)
                         End Try
                     End If
+                    HookUnsubscribe()
                     End
                 End If
             End If
@@ -304,15 +303,24 @@ Public Class FrmMain
 
 #Region "HOOK Stuff"
 
+    Private bHooked As Boolean = False
+
     Private Sub HookSubscribe()
-        m_GlobalHook = Hook.GlobalEvents()
-        AddHandler m_GlobalHook.KeyDown, AddressOf GlobalHookKeyDown
-        AddHandler m_GlobalHook.KeyUp, AddressOf GlobalHookKeyUp
-        AddHandler m_GlobalHook.MouseMove, AddressOf GlobalHookMouseMove
+        If (Not bHooked) Then
+            m_GlobalHook = Hook.GlobalEvents()
+            AddHandler m_GlobalHook.KeyDown, AddressOf GlobalHookKeyDown
+            AddHandler m_GlobalHook.KeyUp, AddressOf GlobalHookKeyUp
+            AddHandler m_GlobalHook.MouseMove, AddressOf GlobalHookMouseMove
+            bHooked = True
+            Debug.Print("HookSubscribe()")
+        End If
     End Sub
 
     Private Sub HookUnsubscribe()
-        m_GlobalHook.Dispose()
+        If (bHooked) Then
+            m_GlobalHook.Dispose()
+            Debug.Print("HookUnsubscribe()")
+        End If
     End Sub
 
     Private Sub GlobalHookKeyDown(sender As Object, e As KeyEventArgs)
