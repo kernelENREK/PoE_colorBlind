@@ -19,6 +19,7 @@
         S4
         S5
         S6
+        VoriciBench
     End Enum
 
 #Region "       Stuff for combobox control"
@@ -64,6 +65,7 @@
         UC_S3L1.Location = UC_S61.Location
         UC_S41.Location = UC_S61.Location
         UC_S51.Location = UC_S61.Location
+        UC_Vorici1.Location = UC_S61.Location
 
         PicChkDefault_S2.Location = PicChkDefault_S3.Location
         LblChkDefault_S2.Location = LblChkDefault_S3.Location
@@ -79,6 +81,7 @@
         UC_S41.SocketsPositions = _newSettings.Layout.S4
         UC_S51.SocketsPositions = _newSettings.Layout.S5
         UC_S61.SocketsPositions = _newSettings.Layout.S6
+        UC_Vorici1.SocketsPositions = _newSettings.Layout.VoriciBenchCenter
 
         ' Socket type combobox:
         scktCbo = New List(Of tscktype)()
@@ -90,6 +93,7 @@
         scktCbo.Add(New tscktype() With {.eSckType = eScktype.S4, .Description = "Four sockets"})
         scktCbo.Add(New tscktype() With {.eSckType = eScktype.S5, .Description = "Five sockets"})
         scktCbo.Add(New tscktype() With {.eSckType = eScktype.S6, .Description = "Six sockets"})
+        scktCbo.Add(New tscktype() With {.eSckType = eScktype.VoriciBench, .Description = "Vorici's bench"})
 
         bSkipCboNumberSockets_SelectedIndexChanged = True
 
@@ -176,6 +180,7 @@
         UC_S41.Visible = False
         UC_S51.Visible = False
         UC_S61.Visible = False
+        UC_Vorici1.Visible = False
 
         PicChkDefault_S2.Visible = False
         LblChkDefault_S2.Visible = False
@@ -243,6 +248,8 @@
                 UC_S51.Visible = True
             Case eScktype.S6
                 UC_S61.Visible = True
+            Case eScktype.VoriciBench
+                UC_Vorici1.Visible = True
         End Select
     End Sub
 
@@ -387,6 +394,11 @@
 
         If (Not UC_S61.ValidationOK) Then
             MessageBox.Show("Some coordinate values from 6 socket are missing or not valid values", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return False
+        End If
+
+        If (Not UC_Vorici1.ValidationOK) Then
+            MessageBox.Show("Some coordinate values from Vorici's bench location missing or not valid values", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Return False
         End If
 

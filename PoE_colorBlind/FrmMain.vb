@@ -27,6 +27,11 @@ Public Class FrmMain
     ''' Direct2Renderer for the overlay
     ''' </summary>
     Private d2d As Direct2DRenderer
+
+    Private overlay_clearColor As Direct2DBrush
+    Private overlay_circleBrush As Direct2DBrush
+    Private overlay_font As Direct2DFont
+    Private overlay_fontBrush As Direct2DBrush
     ' ---------------------------------------------------------------------------------------------
 
     ''' <summary>
@@ -82,6 +87,8 @@ Public Class FrmMain
     ''' </summary>
     Private _myPoE_Item As PoE_Item
 
+    Private bTransformPositionsToBench As Boolean ' New feature @v1.0.1
+
 #End Region
 
 #Region "Constructor (Entry Point)"
@@ -100,6 +107,13 @@ Public Class FrmMain
             If (IO.File.Exists(SETTINGS_FILE)) Then
                 ' Gets the settings from the settings.xml file (stored on the same path as the assembly)
                 _mySettings = Helpers.XMLserialization.Deserialize(Of Settings)(SETTINGS_FILE)
+                ' New in v1.0.1 settings file:
+                If (_mySettings.Layout.VoriciBenchCenter.Count = 0) Then
+                    _mySettings.Layout.VoriciBenchCenter = New List(Of SettingsModels.SocketPosition)() From
+                        {
+                            New SettingsModels.SocketPosition() With {.X = 628, .Y = 731}
+                        }
+                End If
             Else ' No settings file found. Maybe first run?
                 ' Create new settings with default values:
                 _mySettings = New Settings()
@@ -132,6 +146,11 @@ Public Class FrmMain
                 manager = New OverlayManager(poeProcess.MainWindowHandle, rendererOptions)
                 overlay = manager.Window
                 d2d = manager.Graphics
+
+                overlay_clearColor = d2d.CreateBrush(0, 0, 0, 0) ' Fully transparent
+                overlay_circleBrush = d2d.CreateBrush(255, 255, 255, 192)
+                overlay_font = d2d.CreateFont("Consolas", _mySettings.Layout.FontSize)
+                overlay_fontBrush = d2d.CreateBrush(0, 0, 0, 255)
             Else
                 Dim bShowWarning As Boolean = True
                 If (Not _mySettings.PoEMustBeRunning) Then
@@ -170,13 +189,14 @@ Public Class FrmMain
             End If
 
             AddHandler PicChkBoxAutoMode.MouseEnter, AddressOf OnCursorChangeOnMouse_Enter
+            AddHandler PicChkBoxOverlayOnBench.MouseEnter, AddressOf OnCursorChangeOnMouse_Enter
             AddHandler LblThreadPost.MouseEnter, AddressOf OnCursorChangeOnMouse_Enter
             AddHandler lblNewVersionAvailable.MouseEnter, AddressOf OnCursorChangeOnMouse_Enter
 
             AddHandler PicChkBoxAutoMode.MouseLeave, AddressOf OnCursorChangeOnMouse_Leave
+            AddHandler PicChkBoxOverlayOnBench.MouseLeave, AddressOf OnCursorChangeOnMouse_Leave
             AddHandler LblThreadPost.MouseLeave, AddressOf OnCursorChangeOnMouse_Leave
             AddHandler lblNewVersionAvailable.MouseLeave, AddressOf OnCursorChangeOnMouse_Leave
-
 
             Me.BackgroundImage = My.Resources.backgroundMainQoL
 
@@ -357,9 +377,18 @@ Public Class FrmMain
             Dim sctk1X As Integer = _mySettings.Layout.S1(0).X
             Dim sctk1Y As Integer = _mySettings.Layout.S1(0).Y
 
+            Dim rectAutoMode As Rectangle = New Rectangle(sctk1X - 50, sctk1Y - 100, 100, 200)
+
+            Dim addRectY_WhenOnBench As Integer = 0
+            If (bTransformPositionsToBench) Then
+                sctk1X = _mySettings.Layout.VoriciBenchCenter(0).X
+                sctk1Y = _mySettings.Layout.VoriciBenchCenter(0).Y
+
+                rectAutoMode = New Rectangle(sctk1X - 50, sctk1Y - 100, 100, 400)
+            End If
+
             Dim mouseRect As Rectangle = New Rectangle(e.X, e.Y, 1, 1)
 
-            Dim rectAutoMode As Rectangle = New Rectangle(sctk1X - 50, sctk1Y - 100, 100, 200)
             Dim bMouseInRect As Boolean = mouseRect.IntersectsWith(rectAutoMode)
 
             dbg_RectAutomode.Text = bMouseInRect
@@ -528,6 +557,7 @@ Public Class FrmMain
             PicChkBoxAutoMode.Image = My.Resources.Checked
         Else
             PicChkBoxAutoMode.Image = My.Resources.UnChecked
+            TimerAutoMode.Enabled = False 'Fixed bug in @v1.0.1.0
         End If
 
         bautoModeTick = False
@@ -541,6 +571,16 @@ Public Class FrmMain
             TimerClipboard.Enabled = False
 
             DoOverLay(True)
+        End If
+    End Sub
+
+    Private Sub PicChkBoxOverlayOnBench_Click(sender As Object, e As EventArgs) Handles PicChkBoxOverlayOnBench.Click
+        bTransformPositionsToBench = Not bTransformPositionsToBench
+
+        If (bTransformPositionsToBench) Then
+            PicChkBoxOverlayOnBench.Image = My.Resources.Checked
+        Else
+            PicChkBoxOverlayOnBench.Image = My.Resources.UnChecked
         End If
     End Sub
 
@@ -566,12 +606,33 @@ Public Class FrmMain
 
 #Region " --- OVERLAY ---"
 
+    Private Function TransformPositionsToBench(position As SettingsModels.SocketPosition, benchCenter As SettingsModels.SocketPosition) As SettingsModels.SocketPosition
+        Dim offsetCenterX As Integer = _mySettings.Layout.VoriciBenchCenter(0).X - _mySettings.Layout.S1(0).X
+        Dim offsetCenterY As Integer = _mySettings.Layout.VoriciBenchCenter(0).Y - _mySettings.Layout.S1(0).Y
+
+        Dim transformedPosition As SettingsModels.SocketPosition = New SettingsModels.SocketPosition()
+
+        transformedPosition.X = position.X + offsetCenterX
+        transformedPosition.Y = position.Y + offsetCenterY
+
+        Return transformedPosition
+    End Function
+
     Private Sub DrawOverlay(positions As List(Of SettingsModels.SocketPosition), render As Direct2DRenderer, circleBrush As Direct2DBrush, font As Direct2DFont, fontBrush As Direct2DBrush)
         Dim index As Integer = 0
         For Each position In positions
-            render.FillCircle(position.X, position.Y, _mySettings.Layout.Radius, circleBrush)
+            Dim x As Integer = position.X
+            Dim y As Integer = position.Y
+
+            If (bTransformPositionsToBench) Then
+                Dim tPos = TransformPositionsToBench(position, _mySettings.Layout.VoriciBenchCenter(0))
+                x = tPos.X
+                y = tPos.Y
+            End If
+
+            render.FillCircle(x, y, _mySettings.Layout.Radius, circleBrush)
             Dim colorChar = _myPoE_Item.SocketChar(_myPoE_Item.Sockets(index))
-            render.DrawText(colorChar, position.X - _mySettings.Layout.CharOffsetX, position.Y - _mySettings.Layout.CharOffsetY, font, fontBrush)
+            render.DrawText(colorChar, x - _mySettings.Layout.CharOffsetX, y - _mySettings.Layout.CharOffsetY, font, fontBrush)
 
             index += 1
         Next
@@ -580,37 +641,31 @@ Public Class FrmMain
     Private Sub DoOverLay(clear As Boolean)
         Debug.Print($"{Now}: ************************** DoOverLay()")
 
-        Dim clearColor = d2d.CreateBrush(0, 0, 0, 0) ' Fully transparent
-
         d2d.BeginScene()
-        d2d.ClearScene(clearColor)
+        d2d.ClearScene(overlay_clearColor)
 
         If (Not clear) Then
-            Dim font = d2d.CreateFont("Consolas", _mySettings.Layout.FontSize)
-            Dim circleBrush = d2d.CreateBrush(255, 255, 255, 192)
-            Dim fontBrush = d2d.CreateBrush(0, 0, 0, 255)
-
             Select Case _myPoE_Item.Sockets.Count
                 Case 1
-                    DrawOverlay(_mySettings.Layout.S1, d2d, circleBrush, font, fontBrush)
+                    DrawOverlay(_mySettings.Layout.S1, d2d, overlay_circleBrush, overlay_font, overlay_fontBrush)
                 Case 2
                     If (_mySettings.S2_Vertical_Default) Then
-                        DrawOverlay(_mySettings.Layout.S2_Vertical, d2d, circleBrush, font, fontBrush)
+                        DrawOverlay(_mySettings.Layout.S2_Vertical, d2d, overlay_circleBrush, overlay_font, overlay_fontBrush)
                     Else
-                        DrawOverlay(_mySettings.Layout.S2_Horizontal, d2d, circleBrush, font, fontBrush)
+                        DrawOverlay(_mySettings.Layout.S2_Horizontal, d2d, overlay_circleBrush, overlay_font, overlay_fontBrush)
                     End If
                 Case 3
                     If (_mySettings.S3_Vertical_Default) Then
-                        DrawOverlay(_mySettings.Layout.S3_Vertical, d2d, circleBrush, font, fontBrush)
+                        DrawOverlay(_mySettings.Layout.S3_Vertical, d2d, overlay_circleBrush, overlay_font, overlay_fontBrush)
                     Else
-                        DrawOverlay(_mySettings.Layout.S3_L, d2d, circleBrush, font, fontBrush)
+                        DrawOverlay(_mySettings.Layout.S3_L, d2d, overlay_circleBrush, overlay_font, overlay_fontBrush)
                     End If
                 Case 4
-                    DrawOverlay(_mySettings.Layout.S4, d2d, circleBrush, font, fontBrush)
+                    DrawOverlay(_mySettings.Layout.S4, d2d, overlay_circleBrush, overlay_font, overlay_fontBrush)
                 Case 5
-                    DrawOverlay(_mySettings.Layout.S5, d2d, circleBrush, font, fontBrush)
+                    DrawOverlay(_mySettings.Layout.S5, d2d, overlay_circleBrush, overlay_font, overlay_fontBrush)
                 Case 6
-                    DrawOverlay(_mySettings.Layout.S6, d2d, circleBrush, font, fontBrush)
+                    DrawOverlay(_mySettings.Layout.S6, d2d, overlay_circleBrush, overlay_font, overlay_fontBrush)
             End Select
         End If
 

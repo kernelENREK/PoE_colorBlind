@@ -167,6 +167,12 @@
     <Compile Include="Settings\UserInterface\UC_S6.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Settings\UserInterface\UC_Vorici.Designer.vb">
+      <DependentUpon>UC_Vorici.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Settings\UserInterface\UC_Vorici.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FrmMain.resx">
@@ -204,6 +210,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Settings\UserInterface\UC_S6.resx">
       <DependentUpon>UC_S6.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Settings\UserInterface\UC_Vorici.resx">
+      <DependentUpon>UC_Vorici.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

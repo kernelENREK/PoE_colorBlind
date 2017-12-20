@@ -44,6 +44,7 @@ Partial Class FrmSettings
         Me.UC_S41 = New PoE_colorBlind.UC_S4()
         Me.UC_S51 = New PoE_colorBlind.UC_S5()
         Me.UC_S61 = New PoE_colorBlind.UC_S6()
+        Me.UC_Vorici1 = New PoE_colorBlind.UC_Vorici()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PicSave, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PicClose, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -272,6 +273,15 @@ Partial Class FrmSettings
         Me.UC_S61.SocketsPositions = Nothing
         Me.UC_S61.TabIndex = 10
         '
+        'UC_Vorici1
+        '
+        Me.UC_Vorici1.BackColor = System.Drawing.Color.Transparent
+        Me.UC_Vorici1.Location = New System.Drawing.Point(12, 3)
+        Me.UC_Vorici1.Name = "UC_Vorici1"
+        Me.UC_Vorici1.Size = New System.Drawing.Size(222, 131)
+        Me.UC_Vorici1.SocketsPositions = Nothing
+        Me.UC_Vorici1.TabIndex = 25
+        '
         'FrmSettings
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -279,13 +289,14 @@ Partial Class FrmSettings
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
         Me.ClientSize = New System.Drawing.Size(800, 450)
         Me.ControlBox = False
+        Me.Controls.Add(Me.UC_S2V1)
+        Me.Controls.Add(Me.UC_Vorici1)
         Me.Controls.Add(Me.LblChkDefault_S2)
         Me.Controls.Add(Me.LblChkDefault_S3)
         Me.Controls.Add(Me.PicChkDefault_S3)
         Me.Controls.Add(Me.PicChkDefault_S2)
         Me.Controls.Add(Me.UC_S11)
         Me.Controls.Add(Me.UC_S2H1)
-        Me.Controls.Add(Me.UC_S2V1)
         Me.Controls.Add(Me.UC_S3L1)
         Me.Controls.Add(Me.UC_S3V1)
         Me.Controls.Add(Me.UC_S41)
@@ -334,4 +345,5 @@ Partial Class FrmSettings
     Friend WithEvents PicChkDefault_S3 As PictureBox
     Friend WithEvents LblChkDefault_S3 As Label
     Friend WithEvents LblChkDefault_S2 As Label
+    Friend WithEvents UC_Vorici1 As UC_Vorici
 End Class

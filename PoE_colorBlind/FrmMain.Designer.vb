@@ -42,11 +42,14 @@ Partial Class FrmMain
         Me.Label6 = New System.Windows.Forms.Label()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.lblNewVersionAvailable = New System.Windows.Forms.Label()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.PicChkBoxOverlayOnBench = New System.Windows.Forms.PictureBox()
         CType(Me.PicChkBoxAutoMode, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PicOptions, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PicClosing, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PicChkBoxOverlayOnBench, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'dbg_CTRL_A_Hold
@@ -96,7 +99,7 @@ Partial Class FrmMain
         Me.Label2.BackColor = System.Drawing.Color.Transparent
         Me.Label2.Font = New System.Drawing.Font("Cambria", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(135, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(22, Byte), Integer))
-        Me.Label2.Location = New System.Drawing.Point(66, 301)
+        Me.Label2.Location = New System.Drawing.Point(66, 298)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(438, 28)
         Me.Label2.TabIndex = 11
@@ -106,7 +109,7 @@ Partial Class FrmMain
         '
         Me.PicChkBoxAutoMode.BackColor = System.Drawing.Color.Transparent
         Me.PicChkBoxAutoMode.Image = Global.PoE_colorBlind.My.Resources.Resources.UnChecked
-        Me.PicChkBoxAutoMode.Location = New System.Drawing.Point(25, 298)
+        Me.PicChkBoxAutoMode.Location = New System.Drawing.Point(25, 295)
         Me.PicChkBoxAutoMode.Name = "PicChkBoxAutoMode"
         Me.PicChkBoxAutoMode.Size = New System.Drawing.Size(35, 35)
         Me.PicChkBoxAutoMode.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
@@ -253,12 +256,37 @@ Partial Class FrmMain
         Me.lblNewVersionAvailable.Text = "lblNewVersionAvailable"
         Me.lblNewVersionAvailable.Visible = False
         '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.BackColor = System.Drawing.Color.Transparent
+        Me.Label1.Font = New System.Drawing.Font("Cambria", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(135, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(22, Byte), Integer))
+        Me.Label1.Location = New System.Drawing.Point(66, 335)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(231, 28)
+        Me.Label1.TabIndex = 24
+        Me.Label1.Text = "Using Vorici's bench"
+        '
+        'PicChkBoxOverlayOnBench
+        '
+        Me.PicChkBoxOverlayOnBench.BackColor = System.Drawing.Color.Transparent
+        Me.PicChkBoxOverlayOnBench.Image = Global.PoE_colorBlind.My.Resources.Resources.UnChecked
+        Me.PicChkBoxOverlayOnBench.Location = New System.Drawing.Point(25, 332)
+        Me.PicChkBoxOverlayOnBench.Name = "PicChkBoxOverlayOnBench"
+        Me.PicChkBoxOverlayOnBench.Size = New System.Drawing.Size(35, 35)
+        Me.PicChkBoxOverlayOnBench.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
+        Me.PicChkBoxOverlayOnBench.TabIndex = 23
+        Me.PicChkBoxOverlayOnBench.TabStop = False
+        '
         'FrmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(800, 400)
+        Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.PicChkBoxOverlayOnBench)
         Me.Controls.Add(Me.lblNewVersionAvailable)
         Me.Controls.Add(Me.Label7)
         Me.Controls.Add(Me.Label6)
@@ -286,6 +314,7 @@ Partial Class FrmMain
         CType(Me.PicClosing, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PicChkBoxOverlayOnBench, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -310,4 +339,6 @@ Partial Class FrmMain
     Friend WithEvents Label6 As Label
     Friend WithEvents Label7 As Label
     Friend WithEvents lblNewVersionAvailable As Label
+    Friend WithEvents Label1 As Label
+    Friend WithEvents PicChkBoxOverlayOnBench As PictureBox
 End Class

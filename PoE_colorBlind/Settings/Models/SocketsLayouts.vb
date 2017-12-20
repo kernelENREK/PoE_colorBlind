@@ -36,6 +36,7 @@
         Public S4 As List(Of SocketPosition)
         Public S5 As List(Of SocketPosition)
         Public S6 As List(Of SocketPosition)
+        Public VoriciBenchCenter As List(Of SocketPosition)
 
         Public Sub New()
 
@@ -52,6 +53,7 @@
             S4 = New List(Of SocketPosition)()
             S5 = New List(Of SocketPosition)()
             S6 = New List(Of SocketPosition)()
+            VoriciBenchCenter = New List(Of SocketPosition)()
 
         End Sub
     End Class

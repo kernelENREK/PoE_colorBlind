@@ -134,6 +134,11 @@ Public Class Settings
                 New SocketPosition() With {.X = 314, .Y = 568},
                 New SocketPosition() With {.X = 356, .Y = 568}
             }
+
+        Layout.VoriciBenchCenter = New List(Of SocketPosition)() From
+            {
+                New SocketPosition() With {.X = 628, .Y = 731}
+            }
     End Sub
 
 End Class

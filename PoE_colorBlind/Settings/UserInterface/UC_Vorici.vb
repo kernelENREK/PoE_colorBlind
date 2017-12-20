@@ -2,10 +2,9 @@
 
 ''' <summary>
 ''' User Control for setting a One Socket Item Layout
-''' Exactly same code as <see cref="UC_Vorici"/>
+''' Exactly same code as <see cref="UC_S1"/>
 ''' </summary>
-Public Class UC_S1
-
+Public Class UC_Vorici
     Private bSkipValidation As Boolean
 
     Private _socketsPositions As List(Of SocketPosition)
@@ -63,5 +62,4 @@ Public Class UC_S1
         Next
 
     End Sub
-
 End Class
